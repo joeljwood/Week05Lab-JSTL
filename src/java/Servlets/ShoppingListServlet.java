@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 public class ShoppingListServlet extends HttpServlet {
 
     ArrayList<String> shoppingItems = new ArrayList<>();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -32,7 +33,7 @@ public class ShoppingListServlet extends HttpServlet {
             response.sendRedirect("ShoppingList");
             return;
         }
-        
+
         getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
 
     }
@@ -45,29 +46,37 @@ public class ShoppingListServlet extends HttpServlet {
 
         String action = request.getParameter("action");
         String username = request.getParameter("username");
-        
-        
-        if (action.equals("register")) {
-            if (username == null || username.equals("")) {
-                session.setAttribute("registerMessage", "Please enter a username");
-                getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
-            }
 
-            session.setAttribute("username", username);
-            response.sendRedirect("ShoppingList");
+        switch (action) {
+            case "register":
+                if (username == null || username.equals("")) {
+                    session.setAttribute("registerMessage", "Please enter a username");
+                    getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+                }
+                session.setAttribute("username", username);
+                response.sendRedirect("ShoppingList");
+                break;
+            case "add":
+                String listItem = request.getParameter("listInput");
+                shoppingItems.add(listItem);
+                session.setAttribute("shopingItems", shoppingItems);
+                getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
+                break;
+            case "delete":
+                String deleteItem = request.getParameter("item");
+
+                int delete = shoppingItems.indexOf(deleteItem);
+                if (delete > -1) {
+
+                    shoppingItems.remove(delete);
+                    session.setAttribute("shoppingItems", shoppingItems);
+                    getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
+                }
+                break;
+            default:
+                break;
         }
-        if (action.equals("add")){
-            String listItem = request.getParameter("listInput");
-            shoppingItems.add(listItem);
-            session.setAttribute("shopingItems", shoppingItems);
-            getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
-        }
-        if (action.equals("delete")){
-            
-        }
-        
+
     }
 
 }
-
-
