@@ -4,6 +4,7 @@
     Author     : 850223
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,6 +16,23 @@
         <h1>Shopping List</h1>
         <br>
         <p>Hello, ${username}</p>
-        <a href="ShoppingList?logout">Logout</a>
+        <p><a href="ShoppingList?action=logout">Logout</a></p>
+        
+        <br> 
+        <h2>List</h2>
+        <form method="post" action="">
+            <label>Add item:</label>
+            <input type="text" name="listInput" value="${listItem}">
+            <input type="submit" name="submit" value="addItem">
+            <input type="hidden" name="action" value="add"
+        </form>
+        <form>
+            <c:forEach items='${shopingItems}' var='item'>
+            <ul>
+                <li>${item}</li>
+            </ul>
+            </c:forEach>
+        </form>
+        
     </body>
 </html>
