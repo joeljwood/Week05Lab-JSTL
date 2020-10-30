@@ -23,16 +23,17 @@
         <form method="post" action="">
             <label>Add item:</label>
             <input type="text" name="listInput" value="${listItem}">
-            <input type="submit" name="submit" value="addItem">
-            <input type="hidden" name="action" value="add"
+            <input type="hidden" name="action" value="add">
+            <input type="submit" name="submit" value="Add Item">
         </form>
-        <form>
+        <form method="post" action="">
             <c:forEach items='${shopingItems}' var='item'>
             <ul>
-                <li>${item}</li>
+                <li><input type="radio" name="item" value="${item}">${item}</li>
             </ul>
             </c:forEach>
+            <input type="submit" value="Delete">
+            <input type="hidden" name="action" value="delete"
         </form>
-        
     </body>
 </html>

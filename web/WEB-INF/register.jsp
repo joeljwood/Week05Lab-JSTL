@@ -17,7 +17,8 @@
         <form method="post" action="ShoppingList">
             <label>Username:</label>
             <input type="text" name="username" value="${username}">
-            <input type="submit" name="register" value="Register Name">
+            <input type="hidden" name="action" value="register">
+            <input type="submit" name="submit" value="Register">
         </form>
             <p>${registerMessage}</p>
     </body>
